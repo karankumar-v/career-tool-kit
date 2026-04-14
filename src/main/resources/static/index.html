@@ -1,0 +1,298 @@
+<!-- src/main/resources/static/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Toolkit - Resume Builder & Analyzer</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-briefcase"></i>
+            <span>Career Toolkit</span>
+        </div>
+        <div class="nav-links">
+            <a href="#builder" class="nav-link active" data-tab="builder">
+                <i class="fas fa-file-alt"></i> Resume Builder
+            </a>
+            <a href="#analyzer" class="nav-link" data-tab="analyzer">
+                <i class="fas fa-search"></i> Resume Analyzer
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Resume Builder Section -->
+        <section id="builder" class="tab-content active">
+            <div class="section-header">
+                <h1><i class="fas fa-file-alt"></i> Resume Builder</h1>
+                <p>Create a professional, ATS-friendly resume in minutes</p>
+            </div>
+
+            <form id="resumeForm" class="resume-form">
+                <!-- Personal Information -->
+                <div class="form-section">
+                    <h2><i class="fas fa-user"></i> Personal Information</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="fullName">Full Name *</label>
+                            <input type="text" id="fullName" name="fullName" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required placeholder="john@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone *</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="+1 234 567 8900">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" name="location" placeholder="City, Country">
+                        </div>
+                        <div class="form-group">
+                            <label for="linkedIn">LinkedIn URL</label>
+                            <input type="url" id="linkedIn" name="linkedIn" placeholder="linkedin.com/in/johndoe">
+                        </div>
+                        <div class="form-group">
+                            <label for="github">GitHub URL</label>
+                            <input type="url" id="github" name="github" placeholder="github.com/johndoe">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Summary -->
+                <div class="form-section">
+                    <h2><i class="fas fa-align-left"></i> Professional Summary</h2>
+                    <div class="form-group full-width">
+                        <label for="summary">Write a brief professional summary</label>
+                        <textarea id="summary" name="summary" rows="4" 
+                            placeholder="Experienced software developer with 5+ years of expertise in Java and Spring Boot..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Skills -->
+                <div class="form-section">
+                    <h2><i class="fas fa-cogs"></i> Technical Skills</h2>
+                    <div class="form-group full-width">
+                        <label for="skills">Enter skills (comma-separated)</label>
+                        <input type="text" id="skills" name="skills" 
+                            placeholder="Java, Spring Boot, React, MySQL, AWS, Docker">
+                        <div class="skill-tags" id="skillTags"></div>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="form-section">
+                    <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+                    <div id="educationContainer">
+                        <div class="education-entry">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Degree *</label>
+                                    <input type="text" name="edu_degree[]" required 
+                                        placeholder="Bachelor of Technology">
+                                </div>
+                                <div class="form-group">
+                                    <label>Institution *</label>
+                                    <input type="text" name="edu_institution[]" required 
+                                        placeholder="University Name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Year</label>
+                                    <input type="text" name="edu_year[]" placeholder="2020 - 2024">
+                                </div>
+                                <div class="form-group">
+                                    <label>GPA</label>
+                                    <input type="text" name="edu_gpa[]" placeholder="3.8/4.0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add" onclick="addEducation()">
+                        <i class="fas fa-plus"></i> Add Education
+                    </button>
+                </div>
+
+                <!-- Experience -->
+                <div class="form-section">
+                    <h2><i class="fas fa-briefcase"></i> Work Experience</h2>
+                    <div id="experienceContainer">
+                        <div class="experience-entry">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Job Title *</label>
+                                    <input type="text" name="exp_title[]" required 
+                                        placeholder="Software Engineer">
+                                </div>
+                                <div class="form-group">
+                                    <label>Company *</label>
+                                    <input type="text" name="exp_company[]" required 
+                                        placeholder="Tech Company Inc.">
+                                </div>
+                                <div class="form-group">
+                                    <label>Duration</label>
+                                    <input type="text" name="exp_duration[]" 
+                                        placeholder="Jan 2022 - Present">
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Responsibilities (one per line)</label>
+                                <textarea name="exp_responsibilities[]" rows="4" 
+                                    placeholder="Developed RESTful APIs serving 1M+ daily requests
+Implemented CI/CD pipelines reducing deployment time by 50%
+Led a team of 5 developers in Agile environment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add" onclick="addExperience()">
+                        <i class="fas fa-plus"></i> Add Experience
+                    </button>
+                </div>
+
+                <!-- Projects -->
+                <div class="form-section">
+                    <h2><i class="fas fa-project-diagram"></i> Projects</h2>
+                    <div id="projectsContainer">
+                        <div class="project-entry">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Project Name</label>
+                                    <input type="text" name="proj_name[]" placeholder="E-Commerce Platform">
+                                </div>
+                                <div class="form-group">
+                                    <label>Technologies Used</label>
+                                    <input type="text" name="proj_tech[]" 
+                                        placeholder="React, Node.js, MongoDB">
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Description</label>
+                                <textarea name="proj_description[]" rows="2" 
+                                    placeholder="Built a full-stack e-commerce platform with payment integration..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add" onclick="addProject()">
+                        <i class="fas fa-plus"></i> Add Project
+                    </button>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="previewResume()">
+                        <i class="fas fa-eye"></i> Preview
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Generate PDF
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Resume Analyzer Section -->
+        <section id="analyzer" class="tab-content">
+            <div class="section-header">
+                <h1><i class="fas fa-search"></i> Resume Analyzer</h1>
+                <p>Get instant ATS score and improvement suggestions</p>
+            </div>
+
+            <div class="analyzer-container">
+                <div class="upload-section">
+                    <form id="analyzerForm" enctype="multipart/form-data">
+                        <div class="upload-area" id="uploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Drag & Drop your resume here</h3>
+                            <p>or click to browse</p>
+                            <p class="file-types">Supports PDF, DOCX, TXT</p>
+                            <input type="file" id="resumeFile" name="file" 
+                                accept=".pdf,.docx,.txt" hidden>
+                        </div>
+                        <div id="selectedFile" class="selected-file" style="display: none;">
+                            <i class="fas fa-file"></i>
+                            <span id="fileName"></span>
+                            <button type="button" onclick="clearFile()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="jobDescription">
+                                <i class="fas fa-clipboard-list"></i> Job Description (Optional)
+                            </label>
+                            <textarea id="jobDescription" name="jobDescription" rows="6" 
+                                placeholder="Paste the job description here to get tailored suggestions and see how well your resume matches the requirements..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full" id="analyzeBtn">
+                            <i class="fas fa-search"></i> Analyze Resume
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Results Section -->
+                <div id="analysisResults" class="results-section" style="display: none;">
+                    <div class="score-card">
+                        <div class="score-circle">
+                            <svg viewBox="0 0 36 36" class="circular-chart">
+                                <path class="circle-bg" d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                <path class="circle" id="scoreCircle" stroke-dasharray="0, 100" d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                <text x="18" y="20.35" class="score-text" id="scoreText">0%</text>
+                            </svg>
+                        </div>
+                        <h3>ATS Score</h3>
+                        <p id="overallFeedback" class="feedback-text"></p>
+                    </div>
+
+                    <div class="results-grid">
+                        <!-- Section Scores -->
+                        <div class="result-card">
+                            <h3><i class="fas fa-chart-bar"></i> Section Scores</h3>
+                            <canvas id="sectionChart"></canvas>
+                        </div>
+
+                        <!-- Detected Skills -->
+                        <div class="result-card">
+                            <h3><i class="fas fa-check-circle"></i> Detected Skills</h3>
+                            <div id="detectedSkills" class="skills-list"></div>
+                        </div>
+
+                        <!-- Missing Skills -->
+                        <div class="result-card">
+                            <h3><i class="fas fa-exclamation-circle"></i> Missing Skills</h3>
+                            <div id="missingSkills" class="skills-list missing"></div>
+                        </div>
+
+                        <!-- Suggestions -->
+                        <div class="result-card full-width">
+                            <h3><i class="fas fa-lightbulb"></i> Improvement Suggestions</h3>
+                            <ul id="suggestions" class="suggestions-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Processing...</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

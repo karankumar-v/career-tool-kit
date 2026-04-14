@@ -1,0 +1,11 @@
+com\careertoolkit\model\AnalysisResult.class
+com\careertoolkit\model\ResumeData$Project.class
+com\careertoolkit\controller\ResumeAnalyzerController.class
+com\careertoolkit\config\WebConfig.class
+com\careertoolkit\controller\ResumeBuilderController.class
+com\careertoolkit\CareerToolkitApplication.class
+com\careertoolkit\model\ResumeData$Education.class
+com\careertoolkit\service\PdfGeneratorService.class
+com\careertoolkit\service\ResumeAnalyzerService.class
+com\careertoolkit\model\ResumeData.class
+com\careertoolkit\model\ResumeData$Experience.class
